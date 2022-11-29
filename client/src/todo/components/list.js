@@ -1,29 +1,50 @@
-function List({list, setList}) {
+//import Alert from "../alert";
+function List({list, setList, setEditId, search, filter}) {
   const itemCheked = (e)=>{
-    let newList = list;
-    for(let i of list){
-      if(i===e.target){
-        let a = {}
-      }else
-        newList.push(i)
-    } 
-    // alert(e.target.id)
-    // list.forEach(i => {
-    //   if(i.id===e.target.id){
-    //     // let newObj =
-    //     alert(i.id) 
-    //     setList([...list, {id: i.id, text: "i.text", active: false}]);
-    //     return
-    //   }
-    // });
+    let newList = [];
+    list.forEach(item => {
+      if(item.id.toString()===e.target.id.toString()){
+        if(item.active){
+          newList.push({id: item.id, text: item.text, active: false});
+        }else{
+          newList.push({id: item.id, text: item.text, active: true});
+        }
+      }else{
+        newList.push(item);
+      }
+    });
+    setList(newList);
   }
+  const deleteItem = (id)=>{
+    if(!window.confirm("Selection item deleted  ?"))
+      return;
+    let newList = [];
+    list.forEach(elem => {
+      if(elem.id.toString()!==id.toString())
+        newList.push(elem);
+    });
+    setList(newList);
+  }
+  const viewList = [];
+  list.forEach(elem => {
+    if(elem.text.toLowerCase().indexOf(search.toLowerCase())===-1)
+      return;
+    if(filter!=="All")
+      if(filter==="Active" && !elem.active)
+        return;
+      else{
+        if(filter==="Completed" && elem.active)
+          return
+      }
+    viewList.push(elem);
+  });
   return (
     <>
       <div className="list">
         <ul className="column">
             {
-              (list.length!==0)?
-                list.sort((a, b)=>a.id>b.id? 1: -1)
+              (viewList.length!==0)?
+                viewList.sort((a, b)=>(a.active&&b.active)? 1: (a.active)? -1:1)
                 .map((item)=>(
                     <li className="row" key={item.id}>
                         <div className="item row between">
@@ -32,15 +53,23 @@ function List({list, setList}) {
                                 type="checkbox" 
                                 id={item.id} 
                                 onClick={itemCheked}
+                                defaultChecked={(!item.active)}
                               />
                               <span>{
-                                  (item.active)? (item.text) : <b>{item.text}</b> 
+                                  (item.active)? (item.text) : <del>{item.text}</del> 
                               }
                               </span>
                           </div>
                           <div>
-                              <button className="btn">edit</button>
-                              <button className="btn">delete</button>
+                              <button 
+                                className="btn" 
+                                onClick={()=>setEditId({id: item.id, text: item.text})}
+                              >edit
+                              </button>
+                              <button 
+                                className="btn"
+                                onClick={()=>deleteItem(item.id)}
+                              >delete</button>
                           </div>
                         </div>
                     </li>

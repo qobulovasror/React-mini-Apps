@@ -142,7 +142,7 @@ ul {
 }
 
 .alert {
-    width: max-content;
+    width: 50%;
     height: max-content;
     border-radius: 10px;
     border: 0px solid #000;
@@ -154,7 +154,7 @@ ul {
     transform: translateX(-50%);
     z-index: 10;
     background-color: #ccc;
-    min-width: 80%;
+    min-width: 50%;
 }
 .alert h3 {
     text-align: center;

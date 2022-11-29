@@ -1,24 +1,29 @@
-import { useState } from 'react';
-
-function EditItem(list, inputs) {
-    const [addItem, setAddItem] = useState("")
+function EditItem({list, setEditId, setList, editId}) {
+    
     const keyHeandler = (e)=>{
         if(e.key==='Enter'){
-            // addHeandler(addItem);
-            setAddItem("");
+            const newList = [];
+            list.forEach(item => {
+                if(item.id.toString()===editId.id.toString()){
+                    newList.push({id: item.id, text: editId.text, active: item.active});
+                }else
+                    newList.push(item)
+            });
+            setList(newList);
+            setEditId({id: -1, text: ""});
         }
     }
     return ( 
         <>
            {
-            (inputs.add)? 
+            (editId.id.toString()!=="-1")? 
                 <div className="add">
                     <input 
                         type="text" 
-                        placeholder="Add item" 
+                        placeholder="Edit item" 
                         onKeyUp={keyHeandler}
-                        value={addItem}
-                        onChange={(e)=>setAddItem(e.target.value)}
+                        value={editId.text}
+                        onChange={(e)=>setEditId({...editId, text: e.target.value})}
                     />
                 </div>
                 :

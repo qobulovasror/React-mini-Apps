@@ -1,41 +1,34 @@
-import { useEffect, useState } from 'react';
-import Alert from '../alert';
-
-function Controls({setInputs, inputs, list, setList}) {
-  const [alert, setAlert] = useState({active: false, result: false});
+function Controls({setInputs, inputs, list, setList, setFilter, filter}) {
     const addEneble = ()=>{
-        (!inputs.add)?  setInputs({ ...inputs, add: true})
-        : setInputs({ ...inputs, add: false})
+        (!inputs.add)?  setInputs({ search: false, add: true})
+        : setInputs({search: false, add: false})
     }
     const searchEneble = ()=>{
-        (!inputs.search)?  setInputs({ ...inputs, search: true}) 
-        : setInputs({ ...inputs, search: false})
+        (!inputs.search)?  setInputs({add: false, search: true}) 
+        : setInputs({add: false, search: false})
     }
     const clearList = ()=>{
-      if(list.length>0)
-        setAlert({active: true, result: ""})
+      if(list.length>0){
+        if(window.confirm("Is list clearing ?"))
+          setList([]);
+      }
     }
 
-    useEffect(()=>{
-      if(alert.result === "ok") 
-        setList([]);
-      else if(alert.result === "cancel")
-        setAlert({active: false, result: false});
-    }, [alert, setList]);
-
+    const filterChanget = (param)=>{
+      setFilter(param);
+    }
   return (
     <>
-      <Alert alert={alert} setAlert={setAlert} text={"Is list clearing ?"}/>
       <div className="controls row between">
         <ul className="row">
           <li>
-            <button className="btn" onClick={addEneble}><i class='bx bx-plus'></i></button>
+            <button className="btn" onClick={addEneble}><i className='bx bx-plus'></i></button>
           </li>
           <li>
-            <button className="btn" onClick={searchEneble}><i class='bx bx-search'></i></button>
+            <button className="btn" onClick={searchEneble}><i className='bx bx-search'></i></button>
           </li>
           <li>
-            <button className="btn" onClick={clearList}><i class='bx bxs-eraser'></i></button>
+            <button className="btn" onClick={clearList}><i className='bx bxs-eraser'></i></button>
           </li>
           <li>|</li>
           <li className="counts">
@@ -43,14 +36,23 @@ function Controls({setInputs, inputs, list, setList}) {
           </li>
         </ul>
         <ul className="row">
-          <li className="active">
-            <button className="btn">All</button>
+          <li>
+            <button 
+              className={(filter==="All")? "btn active": "btn"} 
+              onClick={()=>filterChanget("All")}
+              >All</button>
           </li>
-          <li className="">
-            <button className="btn">Active</button>
+          <li>
+            <button 
+              className={(filter==="Active")? "btn active": "btn"} 
+              onClick={()=>filterChanget("Active")}
+              >Active</button>
           </li>
-          <li className="">
-            <button className="btn">Completed</button>
+          <li>
+            <button 
+              className={(filter==="Completed")? "btn active": "btn"} 
+              onClick={()=>filterChanget("Completed")}
+              >Completed</button>
           </li>
         </ul>
       </div>

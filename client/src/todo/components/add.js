@@ -10,8 +10,12 @@ function Add({inputs, addHeandler, list}) {
                 return false;
               });
             if(!isFound){
-                addHeandler(addItem);
-                setAddItem("");
+                if(addItem!==""){
+                    addHeandler(addItem);
+                    setAddItem("");
+                }else{
+                    alert("add input is empty !")
+                }
             }else{
                 alert("this element had in list !")
             }

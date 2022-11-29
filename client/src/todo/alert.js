@@ -1,6 +1,6 @@
 import './style.css'
 
-function Alert({text, alert, setAlert}) {
+function Alert({alert, setAlert}) {
     const handler = (param)=>{
         setAlert({active: false, result: param});
     }
@@ -10,15 +10,15 @@ function Alert({text, alert, setAlert}) {
                 (alert.active)? 
                     <div className='alert'>
                         <div className="column">
-                            <h3>{text}</h3>
+                            <h3>{alert.text}</h3>
                             <div className="row around">
                                 <button 
                                     className="btn" 
-                                    onClick={()=>handler("ok")}
+                                    onClick={()=>handler(1)}
                                     >Ok</button>
                                 <button 
                                     className="btn"
-                                    onClick={()=>handler("cancel")}
+                                    onClick={()=>handler(0)}
                                     >Cancel</button>
                             </div>
                         </div>
