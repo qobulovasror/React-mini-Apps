@@ -8,7 +8,10 @@ function Calculator() {
         <>
             <div className="container">
                 <div className="box column">
-                    {/* <div className="end">dark</div> */}
+                    <div className="row header between">
+                        <h3>Calculator</h3>
+                        <button className="dispalyMode">dark</button>
+                    </div>
                     <Display/>
                     <Keyboard/>
                 </div>

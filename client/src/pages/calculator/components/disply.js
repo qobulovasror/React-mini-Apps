@@ -1,7 +1,7 @@
 function Display() {
     return ( 
         <>
-            <div className="ago"></div>
+            <div className="ago">212+54</div>
             <input type="text" placeholder="Enter math " />
         </>
      );
