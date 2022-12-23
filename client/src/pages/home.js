@@ -10,6 +10,12 @@ function Home() {
                 <li>
                     <Link to="/calculator">Calculator</Link>
                 </li>
+                <li>
+                    <Link to="/weather">Weather</Link>
+                </li>
+                <li>
+                    <Link to="/share">Share</Link>
+                </li>
             </ul>
         </>
      );

@@ -16,7 +16,7 @@ function OtherFun({issue, setIssue}) {
       <div className="row">
         <button onClick={clearHandler}>C</button>
         <button onClick={root}>√ </button>
-        <button onClick={eraser}><i class='bx bx-left-arrow-alt'></i></button>
+        <button onClick={eraser}><i className='bx bx-left-arrow-alt'></i></button>
       </div>
     </>
   );
